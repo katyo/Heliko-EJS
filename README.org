@@ -1,0 +1,29 @@
+* Intro
+
+  This is yet another implementation of [[http://embeddedjs.com/][EJS]] fully compatible with original.
+  
+  It uses direct template compiling so that implementation very small and simple.
+
+* Usage
+  
+  Example from EJS homepage:
+  : var tpl = new EJS(
+  :   "<h2><%= title %></h2>"+
+  :   "<ul>"+
+  :   "<% for(var i=0; i<supplies.length; i++) {%>"+
+  :   "  <li><%= supplies[i] %></li>"+
+  :   "<% } %>"+
+  :   "</ul>"
+  : );
+  : var res = tpl.render({
+  :   title: 'Cleaning Supplies'
+  :   supplies: ['mop', 'broom', 'duster']
+  : });
+
+  The result:
+  : <h2>Cleaning Supplies</h2>
+  : <ul>
+  :   <li>mop</li>
+  :   <li>broom</li>
+  :   <li>duster</li>
+  : </ul>
