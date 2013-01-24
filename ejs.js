@@ -4,7 +4,7 @@ define('ejs', function(){
       this.compile(src);
     }
   };
-  
+
   EJS.prototype = {
     regexp: /(?:\n\s*)?(<%[=]?)((?:[^%]|[%][^>])+)%>/gm,
     helper: {},
@@ -37,12 +37,11 @@ define('ejs', function(){
 	}
 	r.push(o);
       }
-      r.unshift('this.method=function(){'+
-		'with(arguments[2]){'+
+      r.unshift('with(arguments[2]){'+
 		'with(arguments[3]){');
-      r.push('};};return arguments[0];};');
+      r.push('};};return arguments[0];');
       try{
-	eval(r.join('\n'));
+	this.method = new Function(r.join('\n'));
 	return true;
       }catch(e){
 	if(typeof this.check == 'function'){
@@ -53,7 +52,7 @@ define('ejs', function(){
       }
     }
   };
-  
+
   EJS.CompileError = function(message){
     if(typeof message == 'string'){
       this.message = message;
@@ -61,7 +60,7 @@ define('ejs', function(){
   };
   EJS.CompileError.prototype = new Error();
   EJS.CompileError.prototype.name = 'EJS.CompileError';
-  
+
   EJS.RenderError = function(message){
     if(typeof message == 'string'){
       this.message = message;
@@ -69,7 +68,7 @@ define('ejs', function(){
   };
   EJS.RenderError.prototype = new Error();
   EJS.RenderError.prototype.name = 'EJS.RenderError';
-  
+
   EJS.Helper = function(name, func){
     if(arguments.length < 2){
       return EJS.prototype.helper[name];
@@ -83,7 +82,7 @@ define('ejs', function(){
       return true;
     }
   };
-  
+
   EJS.Helper('img_tag', function(src, alt){
     return src ? '<img src="' + src + '"' +
       (alt ? ' alt="' + alt + '"' : '') + '/>' : '';
@@ -92,6 +91,6 @@ define('ejs', function(){
     return title && href ?
       '<a href="' + href + '">' + title + '</a>' : '';
   });
-  
+
   return EJS;
 });
