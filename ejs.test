@@ -1,0 +1,10 @@
+#!/usr/bin/env nodejs
+
+var rjs = require('requirejs');
+
+rjs.config({
+  baseUrl:'.',
+  nodeRequire: require
+});
+
+rjs(['ejs.test']);
